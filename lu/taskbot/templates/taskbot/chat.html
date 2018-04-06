@@ -1,0 +1,570 @@
+<html>
+<head>
+  <title>Travel Planning</title>
+  <script src="/static/jquery.min.js"></script>
+  <script src="/static/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src="/static/angular.min.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <link href="/static/font-awesome.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Magnific Popup core CSS file -->
+  <link rel="stylesheet" href="/static/magnific-popup.css">
+  <!-- Magnific Popup core JS file -->
+  <script src="/static/jquery.magnific-popup.min.js"></script>
+  <link rel="stylesheet" href="/static/toastr.min.css"></link>
+  <script src="/static/toastr.min.js"></script>
+  <!-- Latest rateYo compiled and minified CSS -->
+  <link rel="stylesheet" href="/static/jquery.rateyo.min.css">
+  <!-- Latest rateYo compiled and minified JavaScript -->
+  <script src="/static/jquery.rateyo.min.js"></script>
+  <!-- Bootstrap Toogle -->
+  <link href="/static/angular-bootstrap-toggle.min.css"  rel="stylesheet"></link>
+  <script src="/static/angular-bootstrap-toggle.min.js"></script>
+
+</head>
+<style type="text/css">
+  @media only screen and (max-width: 479px) {
+   .mobile-hide{ display: none !important; }
+  }
+  .panel-footer {
+    padding: 20px 15px;
+  }
+  @media only screen and (max-width: 479px) {
+    .mobile {
+      padding: 0px;
+      margin: 0px;
+	}
+    .panel-footer {
+      padding: 13px 0px;
+      position: fixed;
+	  width: 100%;
+    }
+  }
+  body {
+	background: #ebeef0;
+    overflow: hidden;
+    word-break: break-all;
+  }
+  .panel {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075);
+    border-radius: 0;
+    border: 0;
+  }
+  .panel .panel-heading,
+  .panel>:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .panel-heading {
+    position: relative;
+    padding: 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .panel-title {
+    font-weight: normal;
+    padding: 0 20px 0 20px;
+    font-size: 1.416em;
+    line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nano {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .nano>.nano-content {
+    position: absolute;
+    overflow: scroll;
+    overflow-x: hidden;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .pad-all {
+    padding: 15px;
+  }
+
+ .mar-btm {
+    margin-bottom: 15px;
+  }
+
+  .media-block .media-left {
+    display: block;
+    float: left;
+  }
+
+  .img-sm {
+    width: 46px;
+    height: 46px;
+    outline : none;
+  }
+
+  .img-xsm {
+    width: 25px;
+    height: 25px;
+    outline : none;
+  }
+
+  .media-block .media-body {
+    display: block;
+    overflow: hidden;
+    width: auto;
+  }
+
+  .pad-hor {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .speech {
+    position: relative;
+    background: #b7dcfe;
+    color: #317787;
+    display: inline-block;
+    border-radius: 0;
+    padding: 12px 20px;
+  }
+
+  .speech:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0;
+    top: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 7px solid #b7dcfe;
+    margin: 15px 0 0 -6px;
+  }
+
+  .speech-right>.speech:before {
+    left: auto;
+    right: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid #ffdc91;
+    border-right: 0;
+    margin: 15px -6px 0 0;
+  }
+
+  .speech .media-heading {
+    font-size: 1.2em;
+    color: #317787;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: 300;
+  }
+
+  .speech-time {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: .8em;
+    font-weight: 300;
+  }
+
+  .media-block .media-right {
+    float: right;
+  }
+
+  .speech-right {
+    text-align: right;
+  }
+
+  .pad-hor {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .speech-right>.speech {
+    background: #ffda87;
+    color: #a07617;
+    text-align: right;
+  }
+
+  .speech-right>.speech .media-heading {
+    color: #a07617;
+  }
+
+  .btn-primary,
+  .btn-primary:focus,
+  .btn-hover-primary:hover,
+  .btn-hover-primary:active,
+  .btn-hover-primary.active,
+  .btn.btn-active-primary:active,
+  .btn.btn-active-primary.active,
+  .dropdown.open>.btn.btn-active-primary,
+  .btn-group.open .dropdown-toggle.btn.btn-active-primary {
+    background-color: #579ddb;
+    border-color: #5fa2dd;
+    color: #fff !important;
+  }
+
+  .btn {
+    cursor: pointer;
+    /* background-color: transparent; */
+    color: inherit;
+    padding: 6px 12px;
+    border-radius: 0;
+    /* border: 1px solid 0; */
+    font-size: 11px;
+    line-height: 1.42857;
+    vertical-align: middle;
+    -webkit-transition: all .25s;
+    transition: all .25s;
+  }
+  .disliked { color:#1b72f5; }
+  .not-disliked { color:#888; }
+  .white-popup {
+    position: relative;
+    background: #FFF;
+    border-radius: 10px;
+    padding: 40px;
+    width: auto;
+    max-width: 1000px;
+    margin: 20px auto;
+  }
+  .red {
+    color: red;
+  }
+
+.notification-counter {
+    position: absolute;
+    top: 60%;
+    left: 60%;
+
+    background-color: rgba(212, 19, 13, 1);
+    color: #fff;
+    border-radius: 3px;
+    padding: 1px 3px;
+    font: 10px Verdana;
+}
+button{
+  outline : none;
+}
+#start_button {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+}
+</style>
+
+<body>
+  {% verbatim %}
+  <div class="container mobile" ng-app="chat" ng-controller="chatController">
+    <div class="col-md-12 col-lg-12 mobile">
+      <div class="panel">
+        <!--Heading-->
+        <div class="panel-heading" style="height: 7%;">
+          <h3 class="panel-title">
+            Welcome to Complex Task Completing Bot
+            <!-- <a href="#helper-popup" class="open-popup-link">
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </a> -->
+            <!-- <span class="mobile-hide" style="margin:30px">
+              機器人： <toggle ng-model="speech_on" on="說話" off="閉嘴"></toggle>
+            </span> -->
+            <!-- <a href="#schedule-popup" class="open-popup-link" style="float: right; position: relative;">
+              <img src="https://image.flaticon.com/icons/svg/148/148982.svg" style="height: 70%; margin: 5px;">
+              <span class="notification-counter">{{ added_course.length }}</span>
+            </a> -->
+          </h3>
+        </div>
+        <!--Widget body-->
+        <div id="demo-chat-body" class="collapse in">
+          <div class="nano has-scrollbar" style="height: 83%">
+            <div id="chat-box" class="nano-content pad-all" tabindex="0">
+              <ul class="list-unstyled media-block" id="chat-box1">
+
+              </ul>
+            </div>
+          </div>
+          <!--Widget footer-->
+          <div class="panel-footer" style="height: 10%;">
+              <!-- <div class="mobile-hide col-xs-1 col-md-1">
+                <button data-toggle="tooltip" id="start_button" onclick="startButton(event)" style="display: inline-block;"><img  alt="Start" id="start_img" src="https://www.csie.ntu.edu.tw/~r05922062/mic.gif" class="img-sm"></button>
+              </div> -->
+              <div class="col-xs-9 col-md-9">
+                <input id="chat_input" type="text" name="chat" ng-model="chat_input" ng-keypress="chat_input && $event.keyCode == 13 && send(chat_input)"
+                  placeholder="Please enter travel planning related queries" class="form-control chat-input">
+              </div>
+              <div class="col-xs-2 col-md-2">
+                <button class="btn btn-primary btn-block" ng-click="chat_input && send(chat_input)">Send</button>
+              </div>
+          </div>
+        </div>
+
+        <!-- <div id="helper-popup" class="white-popup mfp-hide">
+<h4>查詢方法</h4>
+<p>
+查課程：<b>星期五</b>的<b>機器學習</b><br>
+查時間：<b>陳縕儂</b>老師在星期幾有課<br>
+查系所：<b>自然語言處理</b>是哪個系所的課<br>
+查評價：我想查<b>機器學習</b>的評價<br>
+查教室：<b>智慧對話機器人</b>在哪上課<br>
+查加選方式：<b>資料結構與演算法</b>的加選方式<br>
+</p>
+<hr>
+<h4>選課方法</h4>
+<p>
+點選流水號即會加入右上角的課表 <img src="https://image.flaticon.com/icons/svg/148/148982.svg" class="img-xsm">，可查看課程大綱及退選<br>
+</p>
+<hr>
+<h4>回饋方法</h4>
+<img src="https://www.csie.ntu.edu.tw/~r05922062/show_dialogue.png" style="width:200px;">
+<p>
+若有不合理的回答請按 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+<br>
+需要重置請打 "<b>謝謝</b>"<br>
+也可用左下角麥克風<img src="https://www.csie.ntu.edu.tw/~r05922062/mic.gif" class="img-xsm">問問題喔<br>
+<br>
+結束請和我說 "<b>謝謝</b>" 以及給我評價喔 <(_ _)>
+</p>
+        </div> -->
+
+        <!-- <div id="schedule-popup" class="white-popup mfp-hide">
+          <table class="table table-bordered table-hover" id="selected-table">
+            <thead>
+              <tr>
+                <td colspan="7">
+                  <center>
+                    <h4>
+                      您選了 {{ added_course.length }} 門課共 <span ng-class="{true:'red', false:''}[ credit<16||credit>25 ]">{{ credit }}</span> 學分
+                    </h4>
+                  </center>
+                </td>
+              </tr>
+              <tr>
+                <th width="10%">流水號</th>
+                <th width="35%">課程名稱</th>
+                <th width="10%">任課教師</th>
+                <th width="7%">學分</th>
+                <th width="13">教室</th>
+                <th width="15%">課程時間</th>
+                <th width="10%">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="course in added_course track by $index">
+                <td>{{ course.serial_no }}</td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.instructor }}</td>
+                <td>{{ course.credits }}</td>
+                <td>{{ course.classroom }}</td>
+                <td>{{ course.schedule_str }}</td>
+                <td>
+                  <a class="btn btn-danger table-btn" ng-click="del_course(course)">退選</a>
+                  <a class="btn btn-info table-btn" target="_blank" href="{{course.syllabus_url}}">大綱</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  {% endverbatim %}
+</body>
+
+<script type="text/javascript">
+  // Chat templates
+  var client_tpl = "\n  <li class=\"mar-btm\">\n    <div class=\"media-right\">\n      <img src=\"/static/taskbot/jose.jpg\" class=\"img-circle img-sm\" alt=\"Profile Picture\">\n    </div>\n    <div class=\"media-body pad-hor speech-right\">\n      <div class=\"speech\">\n        <p>{0}</p>\n        <p class=\"speech-time\">\n          <i class=\"fa fa-clock-o fa-fw\"></i> {1}\n        </p>\n      </div>\n    </div>\n  </li>";
+  var server_tpl = "\n  <li class=\"mar-btm\">\n    <div class=\"media-left\">\n      <img src=\"/static/taskbot/bot.png\" class=\"img-circle img-sm\" alt=\"Profile Picture\">\n    </div>\n    <div class=\"media-body pad-hor\">\n      <div class=\"speech\">\n        <p>{0}</p>\n        <p class=\"speech-time\">\n          <i class=\"fa fa-clock-o fa-fw\"></i>{1}\n        </p>\n      </div>\n    </div>\n  </li>";
+  // Utils
+  String.prototype.format = function () {
+    var str = this;
+    for (var i = 0; i < arguments.length; i++) {
+      var reg = new RegExp("\\{" + i + "\\}", "gm");
+      str = str.replace(reg, arguments[i]);
+    }
+    return str;
+  }
+  function now() {
+    time = new Date();
+    h = time.getHours();
+    m = time.getMinutes();
+    return '{0}:{1}'.format(h, m);
+  }
+  function add_message(msg) {
+    $('#chat-box1').append(msg);
+    chat_box = document.getElementById('chat-box');
+    chat_box.scrollTop = chat_box.scrollHeight;
+  }
+  function sucks(id) {
+    $.ajax({ url: "/api/toggle_rating/" + id,
+      success: function (data) {
+        $('#sucks' + id).toggleClass('not-disliked disliked');
+      }
+    });
+  }
+  function speak(utterance) {
+    utterance = utterance.replace(/(<([^>]+)>)/ig, '');
+    // convert numbers to Chinese characters
+    ch_num_chars = ["零","一","二","三","四","五","六","七","八","九"];
+      for(d=0; d<=9; ++d)
+        utterance = utterance.replace(d, ch_num_chars[d]);
+
+    const synthesis = window.speechSynthesis;
+    const utter = new SpeechSynthesisUtterance(utterance);
+    // the list of all available voices
+    const voices = synthesis.getVoices();
+
+    for(i = 0; i < voices.length; ++i) {
+      if(voices[i].name === "Google 國語（臺灣）") {
+        utter.voice = voices[i];
+        utter.rate = 1;
+        utter.pitch = 1;
+        synthesis.speak(utter);
+      }
+    }
+  }
+
+  function save_schedule(added_course) {
+    if (typeof(Storage) !== 'undefined') {
+      // Code for localStorage
+      localStorage.setItem('added_course', JSON.stringify(added_course));
+    } else {
+      //Holy shit! No Web Storage support..
+    }
+  }
+  function load_schedule() {
+    try {
+      var added_course = localStorage.getItem('added_course');
+      if (added_course != null) {
+        added_course = JSON.parse(added_course);
+        for (var i in added_course) {
+          var c = added_course[i];
+          if (c.no.indexOf(semester) >= 0) {
+            $scope.added_course.push(c);
+
+          }
+        }
+      }
+    } catch (e) {
+      localStorage.setItem(localStorageName, JSON.stringify($scope.added_course));
+    }
+  }
+
+  // angularjs thing
+  var app = angular.module('chat', ['ui.toggle']);
+  app.controller('chatController', function ($scope) {
+    function initial() {
+      add_message(server_tpl.format('Welcome to task completing bot for travel planning! How may i help you?', now()));
+      // speak('歡迎來到NTU Course Bot！我能幫您做什麼？');
+      $scope.credit = 0;
+      $scope.added_course = [];
+      try {
+        var added_course = localStorage.getItem('added_course');
+        if (added_course != null) {
+          added_course = JSON.parse(added_course);
+          $scope.added_course = added_course;
+          for (i in added_course)
+            $scope.credit += parseInt(added_course[i].credits);
+        }
+      } catch (e) {
+        //
+      }
+      toastr.options.timeOut = 1000;
+      $scope.speech_on = true;
+    }
+    initial();
+    $scope.add_course = function(serial_no) {
+      var arr = $scope.added_course;
+      for (var i in arr) {
+        // Check if added before
+        if (serial_no == arr[i].serial_no) {
+          return;
+        }
+      }
+      $.ajax({
+        url: "/api/get_course/" + serial_no,
+        success: function (c) {
+          $scope.added_course.push(c);
+          $scope.credit += parseInt(c.credits);
+          toastr.success(c.title + ' 已成功加入您的課表。');
+          $scope.$apply();
+          save_schedule($scope.added_course);
+        }
+      });
+    };
+    $scope.del_course = function(c) {
+      $scope.credit -= parseInt(c.credits);
+      var arr = $scope.added_course;
+      for (var i in arr) {
+        // Remove course from array
+        if (c.serial_no == arr[i].serial_no) {
+          arr.splice(i, 1);
+        }
+      }
+      save_schedule(arr);
+      toastr.warning(c.title + ' 已從您的課表移除。');
+    };
+    // Send message to server
+    $scope.send = function (input) {
+      $scope.chat_input = "";
+      console.log(input);
+      add_message(client_tpl.format(input, now()));
+
+      $.post("", { input: input, csrfmiddlewaretoken: '{{ csrf_token }}' },
+        function (data) {
+          console.log(data)
+          var diaact = data.action.diaact;
+          if(diaact == 'thanks' || diaact == 'closing') {
+            var group_id = data.status.group_id;
+            add_message(server_tpl.format(
+              '{0}<br><br>請為我們這次的服務評分：<div id="{1}">'.format(data.resp_str, group_id), now()));
+            $("#" + group_id).rateYo({
+              starWidth: '30px',
+              halfStar: true,
+              onSet: function (rating, rateYoInstance) {
+                var group_id = $(this).attr('id');
+                rating = 2 * (rating - 2.5); // Scale to -5~5
+                $.ajax({ url: "/api/set_rating/{0}/{1}".format(group_id, rating),
+                  success: function (data) {
+                    toastr.success('謝謝您的回饋！');
+                  }
+                });
+              }
+            });
+          } else {
+            add_message(server_tpl.format(
+              '{0}<br><i id="sucks{1}" onClick="sucks({1})" class="fa fa-thumbs-down not-disliked" aria-pressed="false" style="cursor:pointer"></i>'.format(data.resp_str, data.id), now()));
+          }
+          if($scope.speech_on)
+            speak(data.resp_str);
+          // On recieve, bind event to links
+          $('.selection').off('click').click(function () {
+            $scope.send($(this).html());
+          })
+          $('.serial_no').off('click').click(function () {
+            var course = JSON.parse($(this).html());
+            $scope.add_course(course);
+          })
+        });
+    }
+  });
+
+  var scope;
+  $(function() {
+    scope = angular.element($(".container")).scope();
+    $('.open-popup-link').magnificPopup({
+      type:'inline',
+      midClick: true
+    });
+  })
+</script>
+</html>
